@@ -3,7 +3,7 @@
 Exercise project to build arcade-style racing game inspired by Formula 1 using Python and Pygame.
 
 ## Goals
-- Learn Pygame and basic game architecture.
+- Learn Pygame and basic architecture.
 - Implement simple car physics and collisions.
 - Build tracks, HUD, menus, and lap timing.
 
@@ -14,4 +14,4 @@ Exercise project to build arcade-style racing game inspired by Formula 1 using P
 
 
 ## Run
-- `python main.py`
+- `python game.py`

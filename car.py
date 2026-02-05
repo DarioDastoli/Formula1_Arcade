@@ -1,12 +1,13 @@
 import pygame
+from settings import Settings
 
 class Car():
-    def __init__(self, screen):
+    def __init__(self, screen, settings: Settings):
         self.screen = screen 
         
         #load the car image
         self.image = pygame.image.load('images/car.png')
-        self.transformed_image = pygame.transform.scale(self.image, (300, 300))
+        self.transformed_image = pygame.transform.scale(self.image, (settings.car_height, settings.car_width))
         self.rect = self.transformed_image.get_rect()
         self.screen_rect = screen.get_rect()
         

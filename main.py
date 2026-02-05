@@ -13,7 +13,7 @@ def run_game():
     screen = pygame.display.set_mode(
         (settings.screen_width, settings.screen_height))
     
-    car = Car(screen)
+    car = Car(screen, settings)
     
     pygame.display.set_caption("Arcade F1")
 
