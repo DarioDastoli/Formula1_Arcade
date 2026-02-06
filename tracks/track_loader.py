@@ -8,8 +8,6 @@ def read_track() -> Track:
     
     raw_walls = data['walls']
     raw_start_finish_line = data['start_finish']
-    print("raw walls", raw_walls)
-    print("raw start finish line", raw_start_finish_line)
 
     track = Track(raw_walls, raw_start_finish_line)
     return track

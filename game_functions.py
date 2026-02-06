@@ -1,7 +1,7 @@
 import sys
 import pygame
 from settings import Settings
-from car import Car
+from car.car import Car
 
 def check_events(car:Car):
     for event in pygame.event.get():

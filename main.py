@@ -1,7 +1,7 @@
 import sys
 import pygame
 from settings import Settings
-from car import Car
+from car.car import Car
 import game_functions as gf
 
 def run_game():
