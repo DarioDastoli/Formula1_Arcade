@@ -5,7 +5,6 @@ import math
 class Car():
     def __init__(self, screen: pygame.Surface, settings: Settings, position, orientation):
         self.screen = screen
-        self.position = position
         self.local_points = [
             (0, -10),    
             (0, 10),     
@@ -15,6 +14,8 @@ class Car():
         self.angle = orientation
         self.turn_right = False
         self.turn_left = False
+        self.speed = 0.1
+        self.accelerate = False
         self.rotation_speed = settings.rotation_speed
         self.centroid = self.calcuateCentroid()
 
@@ -26,6 +27,8 @@ class Car():
             self.rotate_point(x, y, self.angle, self.position)
             for x, y in self.local_points
         ]
+        self.position = pygame.Vector2(self.accelerate_car())
+
         pygame.draw.polygon(self.screen, (255,0,0), rotated_points)
 
         # Draw the centroid for debugging purposes
@@ -55,3 +58,16 @@ class Car():
         rotated_y = x * sin_a + y * cos_a + center[1]
 
         return (rotated_x, rotated_y)
+    
+    def accelerate_car(self):
+        self.rotate()
+        new_position_x = self.position[0]
+        new_position_y = self.position[1]
+        if self.accelerate:
+            angle_rad = math.radians(self.angle)
+            new_position_x += self.speed * math.cos(angle_rad)
+            new_position_y += self.speed * math.sin(angle_rad)
+
+        return new_position_x,new_position_y
+
+        

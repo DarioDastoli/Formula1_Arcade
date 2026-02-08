@@ -13,12 +13,16 @@ def check_events(car:Car):
                 car.turn_right = True
             elif event.key == pygame.K_LEFT:
                 car.turn_left = True
+            elif event.key == pygame.K_UP:
+                car.accelerate = True
 
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT:
                 car.turn_right = False
             elif event.key == pygame.K_LEFT:
                 car.turn_left = False
+            elif event.key == pygame.K_UP:
+                car.accelerate = False
 
 def update_screen(settings: Settings, track: track, screen: pygame.Surface):
         screen.fill(settings.bg_color)   

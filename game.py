@@ -22,7 +22,7 @@ def run_game():
     while True:
         gf.check_events(car)
         gf.update_screen(settings, track, screen)       
-        car.rotate()
+        car.accelerate_car()
         car.draw()
         pygame.display.flip()
 
