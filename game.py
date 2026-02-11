@@ -15,15 +15,19 @@ def run_game():
     screen = pygame.display.set_mode(
         (settings.screen_width, settings.screen_height))
   
-    track = track_loader.read_track()
-    
+    track = track_loader.read_track()    
     car = Car(screen, settings, (500,160), 0)
         
+    print(track.wall_collection)
+
     while True:
         gf.check_events(car)
-        gf.update_screen(settings, track, screen)       
-        car.accelerate_car()
+        if not gf.check_car_wall_collisions(car, track):
+            car.update()
+
+        gf.update_screen(settings, track, screen)   
         car.draw()
+
         pygame.display.flip()
 
 run_game()
