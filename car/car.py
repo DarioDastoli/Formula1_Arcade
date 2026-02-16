@@ -2,6 +2,8 @@ import pygame
 from settings import Settings
 import math
 
+from tracks.track import Track
+
 class Car():
     def __init__(self, screen: pygame.Surface, settings: Settings, position, orientation):
         self.screen = screen
@@ -33,10 +35,10 @@ class Car():
         )
         return base_surface
 
-    def update(self):
+    def update(self, track):
         """update all informations about the car"""
         self.rotate()
-        self.move()
+        self.move(track)
         self.graphic_update()
         
     def rotate(self):
@@ -46,16 +48,35 @@ class Car():
         if self.turn_left:
             self.angle -= self.rotation_speed
 
-    def move(self):
+    def move(self, track:Track):
         """move the car"""
         angle_rad = math.radians(self.angle)
-        if self.accelerate:
-            self.position.x += self.speed * math.cos(angle_rad)
-            self.position.y += self.speed * math.sin(angle_rad)
-        elif self.decelerate:
-            self.position.x -= self.speed * math.cos(angle_rad)
-            self.position.y -= self.speed * math.sin(angle_rad)
         
+        dx, dy = 0,0
+
+        if self.accelerate:
+            dx += self.speed * math.cos(angle_rad)
+            dy += self.speed * math.sin(angle_rad)
+        elif self.decelerate:
+            dx -= self.speed * math.cos(angle_rad)
+            dy -= self.speed * math.sin(angle_rad)
+
+        old_x = self.position.x
+        self.position.x += dx
+        self.graphic_update()
+
+        if self.check_car_wall_collisions(track):
+            self.position.x = old_x
+            self.graphic_update()
+
+        old_y = self.position.y
+        self.position.y += dy
+        self.graphic_update()
+
+        if self.check_car_wall_collisions(track):
+            self.position.y = old_y
+            self.graphic_update()
+    
 
     def graphic_update(self):
         """update the cars surface, rect, and mask"""
@@ -67,3 +88,20 @@ class Car():
         """draw the car on the screen"""
         self.screen.blit(self.surface, self.rect)
 
+
+
+    def check_car_wall_collisions(self, track: Track) -> bool:
+        """check if the car is colliding with the wall rects"""
+
+        for wall_rect, wall_mask in track.wall_masks:
+
+            offset = (
+                wall_rect.left - self.rect.left,
+                wall_rect.top - self.rect.top
+            )
+
+            if self.mask.overlap(wall_mask, offset):
+                return True
+        
+        return False
+    

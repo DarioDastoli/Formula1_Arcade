@@ -4,6 +4,8 @@ from settings import Settings
 from car.car import Car
 from tracks.track import Track
 from tracks import track_loader
+import math
+
 
 def check_events(car:Car):
     """check for any input from the user"""
@@ -37,24 +39,5 @@ def update_screen(settings: Settings, track: Track, screen: pygame.Surface):
         for segment in track.wall_collection:
             pygame.draw.line(screen, settings.wall_color, segment[0], segment[1])
         pygame.draw.line(screen, settings.start_finish_color, track.start_finish[0], track.start_finish[1])
-
-def check_car_wall_collisions(car: Car, track: Track) -> bool:
-    """check if the car is colliding with the wall rects"""
-    if car.turn_left or car.turn_right or car.accelerate or car.decelerate:
-
-        for wall_rect, wall_mask in track_loader.get_track_mask(track):
-
-            offset = (
-                wall_rect.left - car.rect.left,
-                wall_rect.top - car.rect.top
-            )
-
-            if car.mask.overlap(wall_mask, offset):
-                return True
-    
-    return False
-    
-
- 
 
 

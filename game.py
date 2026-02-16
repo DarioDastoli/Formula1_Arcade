@@ -22,9 +22,7 @@ def run_game():
 
     while True:
         gf.check_events(car)
-        if not gf.check_car_wall_collisions(car, track):
-            car.update()
-
+        car.update(track)
         gf.update_screen(settings, track, screen)   
         car.draw()
 
