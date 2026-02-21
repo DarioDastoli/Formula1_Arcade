@@ -58,6 +58,7 @@ class Car():
 
     def move(self, track:Track):
         """move the car"""
+        self.check_car_Start_finish_collision(track)
         angle_rad = math.radians(self.angle)
         
         dx, dy = 0,0
@@ -84,6 +85,8 @@ class Car():
         if self.check_car_wall_collisions(track):
             self.position.y = old_y
             self.graphic_update()
+
+
     
 
     def graphic_update(self):
@@ -113,3 +116,19 @@ class Car():
         
         return False
     
+    def check_car_Start_finish_collision(self, track: Track) -> bool:
+        # if not self.rect.colliderect(track.start_finish_rect):
+        #     print('false')
+        #     return False
+ 
+        offset = (
+            track.start_finish_rect.left - self.rect.left,
+            track.start_finish_rect.top - self.rect.top
+        )
+
+
+        if self.mask.overlap(track.start_finish_mask, offset):
+            print('True')
+            return True
+        # print('false')
+        return False
