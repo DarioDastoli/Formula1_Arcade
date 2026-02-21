@@ -37,16 +37,24 @@ class Car():
 
     def update(self, track):
         """update all informations about the car"""
-        self.rotate()
+        self.rotate(track)
         self.move(track)
         self.graphic_update()
         
-    def rotate(self):
+    def rotate(self, track:Track):
         """rotate the car"""
+        old_angle = self.angle
+
         if self.turn_right:
             self.angle += self.rotation_speed
         if self.turn_left:
             self.angle -= self.rotation_speed
+
+        self.graphic_update()
+
+        if(self.check_car_wall_collisions(track)):
+            self.angle = old_angle
+            self.graphic_update()
 
     def move(self, track:Track):
         """move the car"""
