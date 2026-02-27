@@ -1,10 +1,12 @@
 import json
+from pathlib import Path
 from .track import Track
 import pygame
 
 def read_track() -> Track:
     """Read the track from the json vlaue"""
-    with open('tracks\\track.json', 'r') as file:
+    track_path = Path(__file__).with_name('track.json')
+    with track_path.open('r', encoding='utf-8') as file:
         data = json.load(file)
     
     raw_walls = data['walls']
