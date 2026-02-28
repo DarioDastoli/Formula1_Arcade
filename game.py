@@ -3,7 +3,9 @@ from car import car
 from settings import Settings
 from car.car import Car
 from tracks import track_loader, track
+from scoreboard import Scoreboard
 import game_functions as gf
+
 
 def run_game():
     # Initialize the game
@@ -17,15 +19,19 @@ def run_game():
   
     track = track_loader.read_track()    
     car = Car(screen, settings, (500,160), 0)
+    scoreboard = Scoreboard(screen)
         
     print(track.wall_collection)
 
+    #run the game at 60 fps
+    clock = pygame.time.Clock()
     while True:
+        clock.tick(120)
         gf.check_events(car)
         car.update(track)
-        gf.update_screen(settings, track, screen)   
+        gf.update_screen(settings, track, screen, scoreboard)   
         car.draw()
-
+        gf.start_lap(car, track, scoreboard)
         pygame.display.flip()
 
 run_game()

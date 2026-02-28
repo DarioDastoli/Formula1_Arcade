@@ -15,7 +15,7 @@ class Car():
         self.accelerate = False
         self.decelerate = False
 
-        self.speed = 0.1
+        self.speed = settings.max_speed
         self.rotation_speed = settings.rotation_speed
         
         self.base_surf = self.create_car_surface(settings)
@@ -58,7 +58,6 @@ class Car():
 
     def move(self, track:Track):
         """move the car"""
-        self.check_car_start_finish_collision(track)
         angle_rad = math.radians(self.angle)
         
         dx, dy = 0,0

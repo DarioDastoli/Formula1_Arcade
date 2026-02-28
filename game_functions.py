@@ -1,5 +1,7 @@
+import datetime
 import sys
 import pygame
+from scoreboard import Scoreboard
 from settings import Settings
 from car.car import Car
 from tracks.track import Track
@@ -36,14 +38,14 @@ def check_events(car:Car):
             elif event.key == pygame.K_DOWN:
                 car.decelerate = False
 
-def update_screen(settings: Settings, track: Track, screen: pygame.Surface):
+def update_screen(settings: Settings, track: Track, screen: pygame.Surface, scoreboard: Scoreboard):
     """Update the screen with the drawing of the track."""
     screen.fill(settings.bg_color)
 
     for segment in track.wall_collection:
         pygame.draw.line(screen, settings.wall_color, segment[0], segment[1])
     pygame.draw.line(screen, settings.start_finish_color, track.start_finish[0], track.start_finish[1])
-
+    scoreboard.show_score()
 
 def check_car_Start_finish_collision(car: Car, track: Track) -> bool:
     offset = (
@@ -56,10 +58,16 @@ def check_car_Start_finish_collision(car: Car, track: Track) -> bool:
     # print('false')
     return False
 
-def start_lap(car: Car, track: Track):
+def start_lap(car: Car, track: Track, scoreboard: Scoreboard):
+    #calculate the time for the current lap
     if check_car_Start_finish_collision(car, track):
-        # start a new lap
-        pass
+        if scoreboard.current_laptime > 0:
+            print(f'Lap completed in {scoreboard.current_laptime:.2f} seconds!')
+        scoreboard.current_laptime = 0
+        scoreboard.current_lap += 1 
+    else:
+        scoreboard.current_laptime += 1/120
+    scoreboard.prep_score()
 
 
 

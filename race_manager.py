@@ -7,3 +7,6 @@ class RaceManager:
 
     def update():
         pass
+
+    def reset_stats():
+        self.current_laptime = 0

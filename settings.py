@@ -8,7 +8,8 @@ class Settings():
         self.screen_height = 800
 
         # car settings
-        self.rotation_speed = 0.1
+        self.rotation_speed = 1.5
+        self.max_speed = 1.5
 
         #color settings
         self.bg_color = (230, 230, 230)
