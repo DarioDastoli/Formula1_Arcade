@@ -22,7 +22,7 @@ class Car():
         self.surface = self.base_surf
         self.rect = self.surface.get_rect(center=self.position)
         self.mask = pygame.mask.from_surface(self.surface)
-
+        self.on_start_finish = False
 
     def create_car_surface(self, settings: Settings):
         """Create a triangular surface representing the car"""

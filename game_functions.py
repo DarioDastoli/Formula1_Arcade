@@ -1,12 +1,8 @@
-import datetime
-import sys
 import pygame
 from scoreboard import Scoreboard
 from settings import Settings
 from car.car import Car
 from tracks.track import Track
-from tracks import track_loader
-import math
 
 
 def check_events(car:Car):
@@ -58,17 +54,32 @@ def check_car_Start_finish_collision(car: Car, track: Track) -> bool:
     # print('false')
     return False
 
-def start_lap(car: Car, track: Track, scoreboard: Scoreboard):
-    #calculate the time for the current lap
-    if check_car_Start_finish_collision(car, track):
+def start_lap(car: Car, track: Track, scoreboard: Scoreboard, settings: Settings):
+    on_line = check_car_Start_finish_collision(car, track)
+
+    if on_line and not car.on_start_finish:
+        car.on_start_finish = True
+
+        # Formation lap
+        if scoreboard.formation_lap and scoreboard.current_lap == 0:
+            scoreboard.current_lap = 1
+            scoreboard.current_laptime = 0
+            return
+
+        # Normal lap completion
         if scoreboard.current_laptime > 0:
             print(f'Lap completed in {scoreboard.current_laptime:.2f} seconds!')
-        scoreboard.current_laptime = 0
-        scoreboard.current_lap += 1 
-    else:
-        scoreboard.current_laptime += 1/120
-    scoreboard.prep_score()
+            scoreboard.current_lap += 1
+            scoreboard.current_laptime = 0
 
+    elif not on_line:
+        car.on_start_finish = False
+
+        # Only count time AFTER lap 1 has started
+        if scoreboard.current_lap > 0:
+            scoreboard.current_laptime += 1 / settings.fps
+
+    scoreboard.prep_score()
 
 
 

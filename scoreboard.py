@@ -13,6 +13,8 @@ class Scoreboard:
         self.current_lap = 0
         self.prep_score()
 
+        self.formation_lap = True
+
     def prep_score(self):
         score_str = f'Laptime: {self.current_laptime:.2f}s'
         lap_str = f'Lap: {self.current_lap}'

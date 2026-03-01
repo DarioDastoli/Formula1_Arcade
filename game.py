@@ -23,15 +23,14 @@ def run_game():
         
     print(track.wall_collection)
 
-    #run the game at 60 fps
     clock = pygame.time.Clock()
     while True:
-        clock.tick(120)
+        clock.tick(settings.fps)
         gf.check_events(car)
         car.update(track)
         gf.update_screen(settings, track, screen, scoreboard)   
         car.draw()
-        gf.start_lap(car, track, scoreboard)
+        gf.start_lap(car, track, scoreboard, settings)
         pygame.display.flip()
 
 run_game()

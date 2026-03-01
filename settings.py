@@ -6,7 +6,8 @@ class Settings():
 
         self.screen_width = 1200
         self.screen_height = 800
-
+        self.fps = 120
+        
         # car settings
         self.rotation_speed = 1.5
         self.max_speed = 1.5
